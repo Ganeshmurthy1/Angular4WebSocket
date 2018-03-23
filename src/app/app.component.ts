@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DataService } from './core/data.service';
+import { SocketService } from './core/socket.service';
 import { Subscription } from 'rxjs/Subscription';
 import { FormsModule } from '@angular/forms';
 @Component({
@@ -10,24 +10,28 @@ export class AppComponent implements OnInit, OnDestroy {
   user:string;
   stockQuote: number;
   sub: Subscription;
-  message : any = {};
+  alert:any ={}
+  messages : any = [];
   
-  constructor(private dataService: DataService) { }
+  constructor(private socket: SocketService) { }
 
   ngOnInit() {
-    this.sub = this.dataService.getQuotes()
-        .subscribe(quote => {
-          this.stockQuote = quote;
-        });
+    this.socket.listen('message',this.onEventTrigger.bind(this) )
+    this.socket.listen('alert',this.onAlertTrigger.bind(this) )
   }
 
-  sendMessage(mess){
-    console.log("mess",mess);
-    
-    this.message.text = mess;
-    this.dataService.MessageSubmit(this.message).subscribe(response => {
+  onEventTrigger(message){
+    console.log(message)
+    this.messages.push(message)
+  }
 
-    });
+  onAlertTrigger(message){
+    this.alert=message
+  }
+  sendMessage(user, msg){
+    console.log("msg",msg);
+    this.socket.emit('message',{data : msg, username : user})
+    // this.socket.MessageSubmit(this.message)
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

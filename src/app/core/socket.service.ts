@@ -12,33 +12,18 @@ declare var io : {
 };
 
 @Injectable()
-export class DataService {
+export class SocketService {
   constructor(private http: Http){
 
   }
-  socket: Socket;
-  observer: Observer<number>;
-  getQuotes() : Observable<number> {
-    this.socket = socketIo('http://localhost:3000');
-
-    this.socket.on('data', (res) => {
-      this.observer.next(res.data);
-    });
-
-    return this.createObservable();
+  socket: Socket= socketIo('http://localhost:3000');;
+  
+  public listen(event, callback){
+    this.socket.on(event, callback);
   }
 
-  createObservable() : Observable<number> {
-      return new Observable<number>(observer => {
-        this.observer = observer;
-      });
-  }
-  MessageSubmit(formData){
-    const url = 'http://localhost:3000/message';
-    return this.http.post(url,formData).map((response: Response, headers: any) => {
-      let user = response.json();
-       return user;
-    });
+  public emit(event, data){
+    this.socket.emit(event, data);
   }
 
   private handleError(error) {

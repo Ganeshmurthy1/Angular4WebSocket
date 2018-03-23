@@ -14,35 +14,35 @@ let timerId = null,
 
 app.use(express.static(__dirname + '/dist')); 
 app.use(bodyParser()); 
+
+/*Socket Start */
 io.on('connection', socket => {
 
   sockets.add(socket);
   console.log(`Socket ${socket.id} added`);
-
+  
   if (!timerId) {
     //startTimer();
   }
-app.get('/',function(req,res){
-  res.send("HI");
-})
-app.post('/message', function(req, res) {
-  for (const s of sockets) {
-           s.emit('data', { data: req.body.text });
-          }
-          console.log(req.body.text)
-    res.sendStatus(200)
-});
-  socket.on('clientdata', data => {y
-    console.log(data);
+  // socket.emit('message', { hello: 'world' });
+  io.sockets.emit('alert',{message : "New User is added"})
+  socket.on('message', function (data) {
+    console.log(data)
+    // socket.emit('message', { hello: 'world' });
+    
+    io.sockets.emit('message',data)
+    
   });
 
   socket.on('disconnect', () => {
-    console.log(`Deleting socket: ${socket.id}`);
+    // console.log(`Deleting socket: ${socket.id}`);
     sockets.delete(socket);
-    console.log(`Remaining sockets: ${sockets.size}`);
+    // console.log(`Remaining sockets: ${sockets.size}`);
   });
 
 });
+/**Socket End */
+
 
 // function startTimer() {
 //   //Simulate stock data received by the server that needs 

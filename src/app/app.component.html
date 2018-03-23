@@ -1,12 +1,16 @@
 <h1>Angular with WebSockets</h1>
 <br />
 <h2>Quote: {{ stockQuote }}</h2>
-<form  (ngSubmit)="sendMessage(username.value)">
+<form  (ngSubmit)="sendMessage(username.value, message.value)">
 
    
     <input type="text" class="form-control"  #username required />
+    <input type="text" class="form-control"  #message required />
  <input type="submit" value="send" class="btn btn-primary"/>
-
+   
 </form>
-
+<div>
+    <div>{{alert.message}}</div>
+    <div *ngFor="let message of messages">{{message.username}}<span> >> </span> {{message.data}}</div>
+</div>
  
