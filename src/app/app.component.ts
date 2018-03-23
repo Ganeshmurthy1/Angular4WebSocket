@@ -10,7 +10,7 @@ export class AppComponent implements OnInit, OnDestroy {
   user:string;
   stockQuote: number;
   sub: Subscription;
-  message : any;
+  message : any = {};
   
   constructor(private dataService: DataService) { }
 
