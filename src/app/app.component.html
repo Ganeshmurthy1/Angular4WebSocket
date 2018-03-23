@@ -7,8 +7,7 @@
     <input type="text" class="form-control"  #username required />
     <input type="text" class="form-control"  #message required />
  <input type="submit" value="send" class="btn btn-primary"/>
-   
-</form>
+   </form>
 <div>
     <div>{{alert.message}}</div>
     <div *ngFor="let message of messages">{{message.username}}<span> >> </span> {{message.data}}</div>
