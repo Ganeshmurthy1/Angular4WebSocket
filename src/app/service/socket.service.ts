@@ -5,7 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import * as socketIo from 'socket.io-client';
 import { Http, Headers, Response, HttpModule } from '@angular/http'; 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Socket } from '../shared/interfaces';
+import { Socket } from '../eventInterface/interfaces';
 import 'rxjs/add/operator/map';
 declare var io : {
   connect(url: string): Socket;

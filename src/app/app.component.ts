@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SocketService } from './core/socket.service';
+import { SocketService } from './service/socket.service';
 import { Subscription } from 'rxjs/Subscription';
 import { FormsModule } from '@angular/forms';
 @Component({
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.socket.listen('message',this.onEventTrigger.bind(this) )
-    this.socket.listen('alert',this.onAlertTrigger.bind(this) )
+     this.socket.listen('alert',this.onAlertTrigger.bind(this) )
   }
 
   onEventTrigger(message){
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.alert=message
   }
   sendMessage(user, msg){
-    console.log("msg",msg);
+    
     this.socket.emit('message',{data : msg, username : user})
     // this.socket.MessageSubmit(this.message)
   }
