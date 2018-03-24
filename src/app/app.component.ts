@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
+
 export class AppComponent implements OnInit, OnDestroy {
   user:string;
   stockQuote: number;
@@ -30,9 +31,9 @@ export class AppComponent implements OnInit, OnDestroy {
   onAlertTrigger(message){
     this.alert=message
   }
-  sendMessage(user, msg){
+  sendMessage(msg){
     
-    this.socket.emit('message',{data : msg, username : user})
+    this.socket.emit('message',{data : msg})
     // this.socket.MessageSubmit(this.message)
   }
   ngOnDestroy() {
