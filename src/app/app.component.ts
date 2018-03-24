@@ -20,6 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
      this.socket.listen('alert',this.onAlertTrigger.bind(this) )
   }
 
+
+  
   onEventTrigger(message){
     console.log(message)
     this.messages.push(message)
